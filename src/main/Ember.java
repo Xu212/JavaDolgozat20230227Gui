@@ -12,9 +12,24 @@ public class Ember {
         this.MunkToltEv = MunkToltEv;
     }
 
-    public Ember(String nev, String SzovegKor, char neme) {
-        int kor = Integer.parseInt(SzovegKor);
+    public Ember(String nev, int kor, char neme) {
         this(nev,kor,neme,0);
+    }
+
+    public String getNev() {
+        return nev;
+    }
+
+    public int getKor() {
+        return kor;
+    }
+
+    public char getNeme() {
+        return neme;
+    }
+
+    public int getMunkToltEv() {
+        return MunkToltEv;
     }
     
 }
