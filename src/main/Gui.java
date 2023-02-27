@@ -4,16 +4,32 @@
  */
 package main;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author xu.jiyu
  */
 public class Gui extends javax.swing.JFrame {
 
+    private List<Ember> dolgozok;
+    private List<Ember> noiDolgozok;
+    private List<Ember> ferfiDolgozok;
+
     /**
      * Creates new form Gui
      */
-    public Gui() {
+    public Gui() throws IOException {
+        Emberek emberek = new Emberek();
+        noiDolgozok = new ArrayList<Ember>();
+        ferfiDolgozok = new ArrayList<Ember>();
+        dolgozok = emberek.getDolgozok();
+        nemuDolgList(noiDolgozok,'L');
+        nemuDolgList(ferfiDolgozok,'F');
         initComponents();
     }
 
@@ -27,21 +43,22 @@ public class Gui extends javax.swing.JFrame {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
+        jSeparator1 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jComboBox2 = new javax.swing.JComboBox<>();
         jPanel1 = new javax.swing.JPanel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        lanyRB = new javax.swing.JRadioButton();
+        fiuRB = new javax.swing.JRadioButton();
+        legidosebbLb = new javax.swing.JLabel();
+        osszesKLb = new javax.swing.JLabel();
+        hatEvLb = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jButton1 = new javax.swing.JButton();
+        korLb = new javax.swing.JLabel();
+        miotaDLb = new javax.swing.JLabel();
+        mindKCB = new javax.swing.JCheckBox();
+        mentBN = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Dolgozók");
@@ -56,17 +73,27 @@ public class Gui extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Összesítő"));
 
-        buttonGroup1.add(jRadioButton1);
-        jRadioButton1.setText("lány");
+        buttonGroup1.add(lanyRB);
+        lanyRB.setText("lány");
+        lanyRB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lanyRBActionPerformed(evt);
+            }
+        });
 
-        buttonGroup1.add(jRadioButton2);
-        jRadioButton2.setText("fiú");
+        buttonGroup1.add(fiuRB);
+        fiuRB.setText("fiú");
+        fiuRB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fiuRBActionPerformed(evt);
+            }
+        });
 
-        jLabel3.setText("legidősebb:");
+        legidosebbLb.setText("legidősebb:");
 
-        jLabel4.setText("összes kor:");
+        osszesKLb.setText("összes kor:");
 
-        jLabel5.setText("6 éve dolgozó");
+        hatEvLb.setText("6 éve dolgozó:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -76,42 +103,39 @@ public class Gui extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jRadioButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jRadioButton2))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(lanyRB)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(fiuRB))
+                    .addComponent(legidosebbLb)
+                    .addComponent(osszesKLb)
+                    .addComponent(hatEvLb))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addGap(12, 12, 12)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3)
+                    .addComponent(fiuRB)
+                    .addComponent(lanyRB))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel4)
+                .addComponent(legidosebbLb)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel5)
+                .addComponent(osszesKLb)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(hatEvLb)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Adatok"));
 
-        jLabel6.setText("kor:");
+        korLb.setText("kor:");
 
-        jLabel7.setText("mióta dolgozik:");
+        miotaDLb.setText("mióta dolgozik:");
 
-        jCheckBox1.setText("Mindekettő nem");
+        mindKCB.setText("Mindekettő nem");
 
-        jButton1.setText("Ment");
+        mentBN.setText("Ment");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -121,17 +145,17 @@ public class Gui extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jCheckBox1))
+                        .addComponent(mindKCB))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel7)))
+                                    .addComponent(korLb)
+                                    .addComponent(miotaDLb)))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(23, 23, 23)
-                                .addComponent(jButton1)))
+                                .addComponent(mentBN)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -139,13 +163,13 @@ public class Gui extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel6)
+                .addComponent(korLb)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel7)
+                .addComponent(miotaDLb)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jCheckBox1)
+                .addComponent(mindKCB)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
+                .addComponent(mentBN)
                 .addContainerGap(21, Short.MAX_VALUE))
         );
 
@@ -189,6 +213,60 @@ public class Gui extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void lanyRBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lanyRBActionPerformed
+        OsszesAdatok(noiDolgozok);
+    }//GEN-LAST:event_lanyRBActionPerformed
+
+    private void fiuRBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fiuRBActionPerformed
+        OsszesAdatok(ferfiDolgozok);
+    }//GEN-LAST:event_fiuRBActionPerformed
+    public void OsszesAdatok(List<Ember> lista){
+        legidosebbLb.setText(String.format("legidősebb: %d éves",legidosebb(lista)));
+        osszesKLb.setText(String.format("összes kor: %d év",osszesKor(lista)));
+        hatEvLb.setText(String.format("6 éve dolgozó: %s",hatEveD(lista)));
+    }
+    public List<Ember> nemuDolgList(List<Ember> lista,char nem) {
+        for (Ember dolgozo : dolgozok) {
+            if (dolgozo.getNeme() == nem) {
+                lista.add(dolgozo);
+            }
+        }
+        return lista;
+    }
+    public int legidosebb(List<Ember> lista){
+        int maxKor = lista.get(0).getKor();
+        for (Ember dolgozo : lista) {
+            if(maxKor<dolgozo.getKor()){
+                maxKor = dolgozo.getKor();
+            }
+        }
+        return maxKor;
+    }
+    public int osszesKor(List<Ember> lista){
+        int osszKor = 0;
+        for (Ember dolgozo : lista) {
+            osszKor+=dolgozo.getKor();
+        }
+        return osszKor;
+    }
+    public String hatEveD(List<Ember> lista){
+        String hatEv = "nincs";
+        Ember[] dolgozokTomb = new Ember[lista.size()];
+        lista.toArray(dolgozokTomb);
+        int i = 0;
+        while (i<dolgozokTomb.length&&dolgozokTomb[i].getMunkToltEv()<6) {            
+            i++;
+        }
+        if(i<dolgozokTomb.length){
+            hatEv=dolgozokTomb[i].getNev();
+        }
+        return hatEv;
+    }
+    public void Kiiratas(List<Ember> lista){
+        for (Ember ember : lista) {
+            System.out.printf("%s %d %c %d\n",ember.getNev(),ember.getKor(),ember.getNeme(),ember.getMunkToltEv());
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -219,27 +297,33 @@ public class Gui extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Gui().setVisible(true);
+                try {
+                    new Gui().setVisible(true);
+                } catch (IOException ex) {
+                    Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JRadioButton fiuRB;
+    private javax.swing.JLabel hatEvLb;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel korLb;
+    private javax.swing.JRadioButton lanyRB;
+    private javax.swing.JLabel legidosebbLb;
+    private javax.swing.JButton mentBN;
+    private javax.swing.JCheckBox mindKCB;
+    private javax.swing.JLabel miotaDLb;
+    private javax.swing.JLabel osszesKLb;
     // End of variables declaration//GEN-END:variables
 }

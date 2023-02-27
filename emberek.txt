@@ -1,4 +1,4 @@
-NÉV;KOR;ENEM;MunkTöltÉV
+NÉV;KOR;NEME;MunkTöltÉV
 Péter;21;F
 Pál;18;F
 Petra;22;L;2
