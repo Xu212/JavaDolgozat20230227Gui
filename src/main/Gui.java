@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComboBox;
 
 /**
  *
@@ -31,6 +32,10 @@ public class Gui extends javax.swing.JFrame {
         nemuDolgList(noiDolgozok,'L');
         nemuDolgList(ferfiDolgozok,'F');
         initComponents();
+        fiuCB.removeAllItems();
+        lanyCB.removeAllItems();
+        gordulo(fiuCB, ferfiDolgozok);
+        gordulo(lanyCB, noiDolgozok);
     }
 
     /**
@@ -46,8 +51,8 @@ public class Gui extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        lanyCB = new javax.swing.JComboBox<>();
+        fiuCB = new javax.swing.JComboBox<>();
         jPanel1 = new javax.swing.JPanel();
         lanyRB = new javax.swing.JRadioButton();
         fiuRB = new javax.swing.JRadioButton();
@@ -67,9 +72,19 @@ public class Gui extends javax.swing.JFrame {
 
         jLabel2.setText("Fiúk");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        lanyCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        fiuCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        fiuCB.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                fiuCBItemStateChanged(evt);
+            }
+        });
+        fiuCB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fiuCBActionPerformed(evt);
+            }
+        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Összesítő"));
 
@@ -183,14 +198,14 @@ public class Gui extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lanyCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(fiuCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(71, 71, 71))
         );
@@ -201,8 +216,8 @@ public class Gui extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lanyCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fiuCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(46, 46, 46)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -220,6 +235,19 @@ public class Gui extends javax.swing.JFrame {
     private void fiuRBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fiuRBActionPerformed
         OsszesAdatok(ferfiDolgozok);
     }//GEN-LAST:event_fiuRBActionPerformed
+
+    private void fiuCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fiuCBActionPerformed
+        
+    }//GEN-LAST:event_fiuCBActionPerformed
+
+    private void fiuCBItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_fiuCBItemStateChanged
+        KivalasztottAdatok(ferfiDolgozok,String.valueOf(evt.getItem()));
+    }//GEN-LAST:event_fiuCBItemStateChanged
+    
+    public void KivalasztottAdatok(List<Ember> lista,String kivalasztottEmber){
+        korLb.setText(String.format("kor: %d",kivalasztottKor(lista,kivalasztottEmber)));
+    }
+
     public void OsszesAdatok(List<Ember> lista){
         legidosebbLb.setText(String.format("legidősebb: %d éves",legidosebb(lista)));
         osszesKLb.setText(String.format("összes kor: %d év",osszesKor(lista)));
@@ -262,9 +290,28 @@ public class Gui extends javax.swing.JFrame {
         }
         return hatEv;
     }
-    public void Kiiratas(List<Ember> lista){
+    public void kiiratas(List<Ember> lista){
         for (Ember ember : lista) {
             System.out.printf("%s %d %c %d\n",ember.getNev(),ember.getKor(),ember.getNeme(),ember.getMunkToltEv());
+        }
+    }
+    
+    public int kivalasztottKor(List<Ember> lista, String kivalasztottEmber){
+        int kivalasztottKor = 0;
+        Ember[] dolgozokTomb = new Ember[lista.size()];
+        lista.toArray(dolgozokTomb);
+        int i = 0;
+        while (i < dolgozokTomb.length && dolgozokTomb[i].getNev()!=kivalasztottEmber){
+            i++;
+        }
+        if (i < dolgozokTomb.length) {
+            kivalasztottKor=dolgozokTomb[i].getKor();
+        }
+        return kivalasztottKor;
+    }
+    public void gordulo(JComboBox<String> jcb, List<Ember> lista){
+        for (Ember dolgozo : lista) {
+            jcb.addItem(dolgozo.getNev());
         }
     }
     /**
@@ -309,16 +356,16 @@ public class Gui extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JComboBox<String> fiuCB;
     private javax.swing.JRadioButton fiuRB;
     private javax.swing.JLabel hatEvLb;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel korLb;
+    private javax.swing.JComboBox<String> lanyCB;
     private javax.swing.JRadioButton lanyRB;
     private javax.swing.JLabel legidosebbLb;
     private javax.swing.JButton mentBN;
